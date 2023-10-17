@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./index.css"
 import InputContainer from './components/InputContainer';
 
@@ -34,6 +34,9 @@ function App() {
       }
     ]
 
+    const [formDetails, setFormDetails] = useState([{}]);
+    console.log(formDetails)
+
     const handleSubmit = async ()=>{
       try{
         // get the data from the api
@@ -65,7 +68,7 @@ function App() {
         {
           formList.map((data, index)=>(
             <section key={index} className='flex flex-col'>
-              <InputContainer key={index} fieldName={data.fieldName} placeholderData={data.placeholderData} />
+              <InputContainer key={index} fieldName={data.fieldName} placeholderData={data.placeholderData} formDetailsList={formDetails} formFunction={setFormDetails}/>
               {
                  data.fieldName === 'Last Name' || data.fieldName === 'Village'
                  ?

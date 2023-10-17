@@ -8,6 +8,14 @@ const InputContainer = (props) => {
 
     const [hover, setHover] = useState(false);
 
+    // const [firstName, setFirstName] = useState('');
+    // const [lastName, setLastName] = useState('');
+    // const [state, setState] = useState('');
+    // const [district, setDistrict] = useState('');
+    // const [village, setVillage] = useState('');
+    // const [panNumber, setPanNumber] = useState('');
+    // const [adharNumber, setAdharNumber] = useState('');
+
     const {
         transcript,
         interimTranscript,
@@ -28,9 +36,12 @@ const InputContainer = (props) => {
         });
     };
 
-    function btnClickFunction() {
+    function btnClickFunction(e) {
         if(btnClick) {
             setInputValue(transcript);
+            const field = props.fieldName;
+            props.formDetailsList.push({field: transcript});
+            props.formFunction(props.formDetailsList);
             setBtnClick(false);
             resetTranscript();
             SpeechRecognition.stopListening();
