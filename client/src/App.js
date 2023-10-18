@@ -5,37 +5,51 @@ import InputContainer from './components/InputContainer';
 function App() {
     const formList = [
       {
+        field: 'firstName',
         fieldName : 'First Name', 
         placeholderData : 'Swapnil'
       }, 
       {
+        field: 'lastName',
         fieldName : 'Last Name', 
         placeholderData : 'Nikumbh'
       }, 
       {
+        field: 'state',
         fieldName : 'State', 
         placeholderData : 'Maharashtra'
       },
       {
+        field: 'district',
         fieldName : 'District', 
         placeholderData : 'Haveli'
       },
       {
+        field: 'village',
         fieldName : 'Village', 
         placeholderData : 'Haveli'
       },
       {
+        field: 'panNumber',
         fieldName : 'Pan number', 
         placeholderData : 'ASXO87353'
       },
       {
+        field: 'adharNumber',
         fieldName : 'Adhar number', 
         placeholderData : '14334547849'
       }
     ]
 
-    const [formDetails, setFormDetails] = useState([{}]);
-    console.log(formDetails)
+    const [formDetails, setFormDetails] = useState({}); 
+
+    // Create callback function to update formDetails
+    const updateFormDetails = (fieldName, value) => {
+      setFormDetails((prevFormDetails) => ({
+          ...prevFormDetails,
+          [fieldName]: value,
+      }));
+    };
 
     const handleSubmit = async ()=>{
       try{
@@ -45,9 +59,9 @@ function App() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              firstName, lastName, state, district, village, panNumber, adharNumber 
-            }),
+            body: JSON.stringify(
+              formDetails
+            ),
             credentials: 'include'
         });
 
@@ -68,13 +82,13 @@ function App() {
         {
           formList.map((data, index)=>(
             <section key={index} className='flex flex-col'>
-              <InputContainer key={index} fieldName={data.fieldName} placeholderData={data.placeholderData} formDetailsList={formDetails} formFunction={setFormDetails}/>
+              <InputContainer key={index} field={data.field} fieldName={data.fieldName} placeholderData={data.placeholderData} formFunction={updateFormDetails} />
               {
                  data.fieldName === 'Last Name' || data.fieldName === 'Village'
                  ?
                  (
                   <section className='text-gray-400'>
-                    ----------------------------------------------------------------------------
+                    ---------------------------------------------------
                   </section>
                  )
                  :

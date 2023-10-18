@@ -1,6 +1,6 @@
 import { mongoDBClient } from "../config/mongoConfig.js";
 
-const createForm = async () => {
+const createForm = async (req, res) => {
     try {
         //Get form details
         const { firstName, lastName, state, district, village, panNumber, adharNumber } = req.body;

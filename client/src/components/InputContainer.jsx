@@ -8,14 +8,6 @@ const InputContainer = (props) => {
 
     const [hover, setHover] = useState(false);
 
-    // const [firstName, setFirstName] = useState('');
-    // const [lastName, setLastName] = useState('');
-    // const [state, setState] = useState('');
-    // const [district, setDistrict] = useState('');
-    // const [village, setVillage] = useState('');
-    // const [panNumber, setPanNumber] = useState('');
-    // const [adharNumber, setAdharNumber] = useState('');
-
     const {
         transcript,
         interimTranscript,
@@ -29,9 +21,8 @@ const InputContainer = (props) => {
         }
     }, [interimTranscript, finalTranscript]);
 
-    const listenContinuously = () => {
+    const listen = () => {
         SpeechRecognition.startListening({
-            continuous: true,
             language: 'en-IN',
         });
     };
@@ -39,16 +30,17 @@ const InputContainer = (props) => {
     function btnClickFunction(e) {
         if(btnClick) {
             setInputValue(transcript);
-            const field = props.fieldName;
-            props.formDetailsList.push({field: transcript});
-            props.formFunction(props.formDetailsList);
+
+            const field = props.field;
+            props.formFunction(field, transcript);
+
             setBtnClick(false);
             resetTranscript();
             SpeechRecognition.stopListening();
         } 
         else {
             setHover(false);
-            listenContinuously();
+            listen();
             setBtnClick(true);
         }
     }
@@ -58,7 +50,7 @@ const InputContainer = (props) => {
     };
 
     return (
-        <section className='w-full h-full pb-[20px]'>
+        <section className='w-full h-full pb-[10px]'>
             <section className='flex flex-col w-full h-full'>
                 {btnClick ? (
                     <section className='w-[365px] h-[0px] text-[10px] text-gray-500 pr-[8px] flex justify-end'>
@@ -88,15 +80,15 @@ const InputContainer = (props) => {
                 </section>
             </section>
             
-            <section className='flex flex-row justify-center items-center w-[370px] h-[54px] border-solid border-[#e0e5f2] outline-none bg-white pl-[16px] relative h-12 items-start border rounded-lg font-medium'>
+            <section className='flex flex-row justify-center items-center w-[370px] h-[45px] border-solid border-[#e0e5f2] outline-none bg-white pl-[16px] relative items-start border rounded-lg font-medium'>
                 <input
                     placeholder={props.placeholderData}
                     type='text'
                     value={inputValue}
                     onChange={handleInputChange}
-                    className='w-[320px] h-[52px] outline-none'
+                    className='w-[320px] h-[43px] outline-none'
                 />
-                <button onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} onClick={btnClickFunction} className={`${btnClick ? 'bg-green-400' : 'bg-gray-400'} w-[60px] h-[54px] flex justify-center items-center rounded-r-lg`}>
+                <button onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} onClick={btnClickFunction} className={`${btnClick ? 'bg-green-400' : 'bg-gray-400'} w-[60px] h-[45px] flex justify-center items-center rounded-r-lg`}>
                     <FaMicrophone color='white' />
                 </button>
             </section>
